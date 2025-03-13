@@ -1,73 +1,54 @@
 <?php
-// Initialisation des variables
-$nom = $email = '';
-$errors = [];
-$formSubmitted = false;
+// Inclusion du fichier de gestion de l'authentification
+require_once 'src/gestionAuthentification.php';
 
-// Traitement du formulaire
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validation du champ "Nom"
-    if (empty($_POST['nom'])) {
-        $errors['nom'] = "Le nom est obligatoire.";
-    } elseif (strlen($_POST['nom']) < 2 || strlen($_POST['nom']) > 255) {
-        $errors['nom'] = "Le nom doit contenir entre 2 et 255 caractères.";
-    } else {
-        $nom = htmlspecialchars($_POST['nom']);
-    }
-
-    // Validation du champ "Email"
-    if (empty($_POST['email'])) {
-        $errors['email'] = "L'email est obligatoire.";
-    } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = "L'email n'est pas valide.";
-    } else {
-        $email = htmlspecialchars($_POST['email']);
-    }
-
-    // Si aucune erreur détectée
-    if (empty($errors)) {
-        $formSubmitted = true;
-        $nom = $email = ''; // Réinitialisation des champs
-    }
+// Vérifie si l'utilisateur est connecté
+if (!est_connecte()) {
+    header('Location: connexion.php'); // Redirige l'utilisateur vers la page de connexion s'il n'est pas connecté
+    exit();
 }
 
-// Définition du titre de la page et de la méta-description
-$pageTitre = "Contact";
-$metaDescription = "Formulaire de contact avec validation côté serveur.";
+// Traitement du formulaire de contact
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nom = FormHandler::sanitizeInput($_POST['nom']);
+    $email = FormHandler::sanitizeInput($_POST['email']);
+    $message = FormHandler::sanitizeInput($_POST['message']);
 
-// Inclusion de l'en-tête commun
-require_once 'header.php';
+    // Validation des champs
+    $nomError = FormHandler::validateLength($nom, 2, 50);
+    $emailError = FormHandler::validateEmail($email);
+    $messageError = FormHandler::validateLength($message, 10, 500);
+
+    if (empty($nomError) && empty($emailError) && empty($messageError)) {
+        // Ici, vous pouvez ajouter la logique pour envoyer l'email (par exemple avec PHP mail() ou un service comme SMTP)
+        $successMessage = "Votre message a été envoyé avec succès.";
+    }
+}
 ?>
 
-<h1>Nous contacter</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+</head>
+<body>
+<form method="POST">
+    <label for="nom">Nom :</label>
+    <input type="text" name="nom" required value="<?= isset($nom) ? $nom : '' ?>">
+    <div><?= isset($nomError) ? $nomError : '' ?></div>
 
-<?php if ($formSubmitted) : ?>
-    <p class="success-message">Le formulaire a bien été envoyé !</p>
-<?php endif; ?>
+    <label for="email">Email :</label>
+    <input type="email" name="email" required value="<?= isset($email) ? $email : '' ?>">
+    <div><?= isset($emailError) ? $emailError : '' ?></div>
 
-<form method="post">
-    <div>
-        <label for="nom">Nom* :</label>
-        <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($nom); ?>" required>
-        <?php if (isset($errors['nom'])) : ?>
-            <span class="error-message"><?php echo $errors['nom']; ?></span>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="email">Email* :</label>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
-        <?php if (isset($errors['email'])) : ?>
-            <span class="error-message"><?php echo $errors['email']; ?></span>
-        <?php endif; ?>
-    </div>
+    <label for="message">Message :</label>
+    <textarea name="message" required><?= isset($message) ? $message : '' ?></textarea>
+    <div><?= isset($messageError) ? $messageError : '' ?></div>
+
     <button type="submit">Envoyer</button>
+
+    <div><?= isset($successMessage) ? $successMessage : '' ?></div>
 </form>
-
-<?php if (!empty($errors)) : ?>
-    <p class="error-message">Le formulaire n'a pas été envoyé !</p>
-<?php endif; ?>
-
-<?php
-// Inclusion du pied de page commun
-require_once 'footer.php';
-?>
+</body>
+</html>

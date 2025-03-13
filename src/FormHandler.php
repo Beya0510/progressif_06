@@ -1,6 +1,7 @@
 <?php
 
 class FormHandler {
+
     /**
      * Valide une valeur pour qu'elle contienne un nombre de caractères spécifique.
      *
@@ -48,6 +49,21 @@ class FormHandler {
         if (strlen($password) < $minLength || strlen($password) > $maxLength) {
             return "Le mot de passe doit contenir entre $minLength et $maxLength caractères.";
         }
+
+        // Vérification de la force du mot de passe (au moins une majuscule, un chiffre et un caractère spécial)
+        if (!preg_match('/[A-Z]/', $password)) {
+            return "Le mot de passe doit contenir au moins une lettre majuscule.";
+        }
+        if (!preg_match('/[a-z]/', $password)) {
+            return "Le mot de passe doit contenir au moins une lettre minuscule.";
+        }
+        if (!preg_match('/\d/', $password)) {
+            return "Le mot de passe doit contenir au moins un chiffre.";
+        }
+        if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
+            return "Le mot de passe doit contenir au moins un caractère spécial.";
+        }
+
         return null;
     }
 
@@ -72,6 +88,8 @@ class FormHandler {
      * @return string Valeur assainie.
      */
     public static function sanitizeInput($value) {
+        // htmlspecialchars() évite les attaques XSS en échappant les caractères spéciaux
         return htmlspecialchars(trim($value));
     }
 }
+

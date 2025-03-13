@@ -1,50 +1,30 @@
 <?php
-// Inclusion du gestionnaire d'authentification
-require_once '../src/gestionAuthentification.php';
-
-// Vérifie si l'utilisateur est connecté
-$estConnecte = est_connecte();
-
-// Définition du titre et de la méta-description
-$title = isset($pageTitre) ? htmlspecialchars($pageTitre) : "Mon Site";
-$description = isset($metaDescription) ? htmlspecialchars($metaDescription) : "Bienvenue sur mon site web.";
-
-// Liste des pages accessibles dans le menu
-$pages = [
-    'Accueil' => 'index.php',
-    'Contact' => 'contact.php'
-];
-
-if ($estConnecte) {
-    $pages['Profil'] = 'profil.php';
-    $pages['Déconnexion'] = 'connexion.php?action=deconnexion';
-} else {
-    $pages['Inscription'] = 'inscription.php';
-    $pages['Connexion'] = 'connexion.php';
-}
-
+// Inclusion du fichier de gestion d'authentification pour pouvoir utiliser la fonction 'est_connecte()'
+// Le fichier 'gestionAuthentification.php' est dans le dossier 'src', donc on ajuste le chemin
+require_once '../src/gestionAuthentification.php'; // Chemin correct si le fichier est dans 'src' dans le dossier racine
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?php echo $description; ?>">
-    <title><?php echo $title; ?></title>
-    <!-- Lien vers le fichier CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
+
 <header>
+    <!-- Navigation principale -->
     <nav>
         <ul>
-            <?php
-            $currentPage = basename($_SERVER['PHP_SELF']);
-            foreach ($pages as $titre => $url) {
-                $activeClass = ($currentPage === $url || ($currentPage === 'connexion.php' && strpos($url, 'action=deconnexion'))) ? ' class="active"' : '';
-                echo "<li><a href=\"$url\"$activeClass>$titre</a></li>";
-            }
-            ?>
+            <!-- Lien vers la page d'accueil -->
+            <li><a href="index.php">Accueil</a></li>
+
+            <!-- Lien vers la page de contact -->
+            <li><a href="contact.php">Contact</a></li>
+
+            <!-- Lien vers le profil de l'utilisateur -->
+            <li><a href="profil.php">Profil</a></li>
+
+            <!-- Vérifie si l'utilisateur est connecté -->
+            <?php if (est_connecte()) : ?>
+                <!-- Si connecté, affichage du lien de déconnexion -->
+                <li><a href="deconnexion.php">Déconnexion</a></li>
+            <?php else : ?>
+                <!-- Si non connecté, affichage du lien de connexion -->
+                <li><a href="connexion.php">Connexion</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

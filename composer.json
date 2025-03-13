@@ -1,5 +1,5 @@
 {
-  "name": "progressif_05",
+  "name": "projets_progressifs/progressif_06",
   "description": "Un projet PHP utilisant Composer",
   "require": {
     "php": "^8.1",
@@ -11,10 +11,10 @@
   },
   "autoload": {
     "psr-4": {
-      "progressif_2\\": "src/"
+      "progressif_06\\": "src/"
     }
   },
   "scripts": {
-    "test": "phpunit"
+    "test": "vendor/bin/phpunit"
   }
 }

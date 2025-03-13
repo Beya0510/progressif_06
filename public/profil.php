@@ -1,55 +1,20 @@
 <?php
-// Inclusion du gestionnaire d'authentification
-require_once '../src/gestionAuthentification.php';
+require_once 'src/gestionAuthentification.php';
 
-// Redirection si non connectée
+// Vérifier si l'utilisateur est connecté
 if (!est_connecte()) {
-    header('Location: connexion.php');
-    exit;
+    header('Location: connexion.php'); // Redirection vers la page de connexion si non connecté
+    exit();
 }
 
-try {
-    // Récupération des informations de l'utilisateur
-    $pdo = new PDO('mysql:host=localhost;dbname=bdd_projet_web', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Récupérer les informations de l'utilisateur
+$conn = new PDO('mysql:host=localhost;dbname=votre_db', 'votre_utilisateur', 'votre_mot_de_passe');
+$stmt = $conn->prepare('SELECT * FROM utilisateurs WHERE id = :id');
+$stmt->bindParam(':id', $_SESSION['utilisateurId']);
+$stmt->execute();
 
-    $stmt = $pdo->prepare("SELECT uti_pseudo, uti_email FROM t_utilisateur_uti WHERE uti_id = :id");
-    $stmt->execute(['id' => $_SESSION['utilisateurId']]);
-    $user = $stmt->fetch();
-
-    if (!$user) {
-        throw new Exception("Utilisateur introuvable.");
-    }
-} catch (PDOException $e) {
-    die("Erreur lors de la récupération des données utilisateur : " . $e->getMessage());
-}
-
-// Définition du titre de la page et de la méta-description
-$pageTitre = "Profil";
-$metaDescription = "Page de profil de l'utilisateur.";
-
-// Inclusion de l'en-tête commun
-require_once 'header.php';
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
-<h1>Mon Profil</h1>
-
-<p><strong>Pseudo :</strong> <?php echo htmlspecialchars($user['uti_pseudo']); ?></p>
-<p><strong>Email :</strong> <?php echo htmlspecialchars($user['uti_email']); ?></p>
-
-<form action="" method="post">
-    <button type="submit" name="deconnexion">Déconnexion</button>
-</form>
-
-<?php
-// Gestion de la déconnexion via le bouton
-if (isset($_POST['deconnexion'])) {
-    require_once '../src/gestionAuthentification.php';
-    deconnecter_utilisateur();
-    header('Location: index.php');
-    exit;
-}
-
-// Inclusion du pied de page commun
-require_once 'footer.php';
-?>
+<h1>Bienvenue, <?php echo htmlspecialchars($user['email']); ?></h1>
+<a href="deconnexion.php">Déconnexion</a>
