@@ -1,5 +1,8 @@
-// Fonction pour afficher ou cacher le menu
-function toggleMenu() {
-    const menu = document.getElementById('menu');
-    menu.classList.toggle('active'); // Toggle la classe 'active' pour ouvrir/fermer le menu
-}
+$(document).ready(function() {
+    $('#hamburger-menu').click(function () {
+        $('#main-menu').toggle('active'); // Basculer l'affichage du menu
+    });
+});
+
+
+

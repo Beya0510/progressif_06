@@ -1,5 +1,5 @@
 <?php
-
+namespace Progressif06;
 class FormHandler {
 
     /**

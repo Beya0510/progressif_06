@@ -11,7 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-      "progressif_06\\": "src/"
+      "Progressif06\\": "src/"
     }
   },
   "scripts": {

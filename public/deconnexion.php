@@ -1,8 +1,8 @@
 <?php
-// Inclure le gestionnaire d'authentification
+include 'header.php';
 require_once 'src/gestionAuthentification.php';
 
-// Vérifier si l'utilisateur est connecté et le déconnecter
+// Vérifie si l'utilisateur est connecté, si oui, on le déconnecte
 if (est_connecte()) {
     deconnecter_utilisateur();
     header('Location: index.php'); // Redirection vers la page d'accueil

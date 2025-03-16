@@ -1,30 +1,46 @@
 <?php
 // Inclusion du fichier de gestion d'authentification pour pouvoir utiliser la fonction 'est_connecte()'
-// Le fichier 'gestionAuthentification.php' est dans le dossier 'src', donc on ajuste le chemin
-require_once '../src/gestionAuthentification.php'; // Chemin correct si le fichier est dans 'src' dans le dossier racine
+require_once '../src/gestionAuthentification.php';
 ?>
+<?php
+$pageTitle = "Accueil";
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<main>
+<!-- Bouton hamburger -->
+<div id="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
 
-<header>
-    <!-- Navigation principale -->
-    <nav>
-        <ul>
-            <!-- Lien vers la page d'accueil -->
-            <li><a href="index.php">Accueil</a></li>
-
-            <!-- Lien vers la page de contact -->
-            <li><a href="contact.php">Contact</a></li>
-
-            <!-- Lien vers le profil de l'utilisateur -->
-            <li><a href="profil.php">Profil</a></li>
-
-            <!-- Vérifie si l'utilisateur est connecté -->
-            <?php if (est_connecte()) : ?>
-                <!-- Si connecté, affichage du lien de déconnexion -->
-                <li><a href="deconnexion.php">Déconnexion</a></li>
-            <?php else : ?>
-                <!-- Si non connecté, affichage du lien de connexion -->
-                <li><a href="connexion.php">Connexion</a></li>
-            <?php endif; ?>
-        </ul>
-    </nav>
-</header>
+<!-- Menu de navigation -->
+<nav id="main-menu">
+    <ul>
+        <li><a href="index.php">Accueil</a></li>
+        <li><a href="../public/contact.php">Contact</a></li>
+        <li><a href="profil.php">Profil</a></li>
+        <!-- Vérifie si l'utilisateur est connecté -->
+        <?php if (est_connecte()) : ?>
+            <li><a href="deconnexion.php">Déconnexion</a></li>
+        <?php else : ?>
+            <li><a href="connexion.php">Connexion</a></li>
+            <li><a href="inscription.php">Inscription</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
+</main>
+<!-- Importation de jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Importation de votre script menu.js -->
+<script src="../assets/Js/menu.js"></script>
+</body>
+</html>

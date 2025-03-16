@@ -1,5 +1,7 @@
 <?php
-require_once 'src/gestionAuthentification.php';
+include 'header.php';
+require_once '../src/gestionAuthentification.php';
+
 
 // Vérifier si l'utilisateur est connecté
 if (!est_connecte()) {
@@ -9,7 +11,7 @@ if (!est_connecte()) {
 
 // Récupérer les informations de l'utilisateur
 $conn = new PDO('mysql:host=localhost;dbname=votre_db', 'votre_utilisateur', 'votre_mot_de_passe');
-$stmt = $conn->prepare('SELECT * FROM utilisateurs WHERE id = :id');
+$stmt = $conn->prepare('SELECT * FROM utilisateurS WHERE id = :id');
 $stmt->bindParam(':id', $_SESSION['utilisateurId']);
 $stmt->execute();
 

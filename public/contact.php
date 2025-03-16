@@ -1,10 +1,13 @@
 <?php
-// Inclusion du fichier de gestion de l'authentification
-require_once 'src/gestionAuthentification.php';
+include 'header.php';
+require_once '../src/gestionAuthentification.php';
+require_once '../src/FormHandler.php';
+
+$pageTitle = "Contact";
 
 // Vérifie si l'utilisateur est connecté
 if (!est_connecte()) {
-    header('Location: connexion.php'); // Redirige l'utilisateur vers la page de connexion s'il n'est pas connecté
+    header('Location: connexion.php'); // Redirection de l'utilisateur vers la page de connexion s'il n'est pas connecté
     exit();
 }
 
@@ -20,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $messageError = FormHandler::validateLength($message, 10, 500);
 
     if (empty($nomError) && empty($emailError) && empty($messageError)) {
-        // Ici, vous pouvez ajouter la logique pour envoyer l'email (par exemple avec PHP mail() ou un service comme SMTP)
         $successMessage = "Votre message a été envoyé avec succès.";
     }
 }
@@ -30,25 +32,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Contact</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-<form method="POST">
-    <label for="nom">Nom :</label>
-    <input type="text" name="nom" required value="<?= isset($nom) ? $nom : '' ?>">
-    <div><?= isset($nomError) ? $nomError : '' ?></div>
+<div class="container">
+    <h1>Contact</h1>
+    <form method="POST">
+        <label for="nom">Nom :</label>
+        <input type="text" name="nom" required value="<?= isset($nom) ? htmlspecialchars($nom) : '' ?>">
+        <div class="error"><?= isset($nomError) ? htmlspecialchars($nomError) : '' ?></div>
 
-    <label for="email">Email :</label>
-    <input type="email" name="email" required value="<?= isset($email) ? $email : '' ?>">
-    <div><?= isset($emailError) ? $emailError : '' ?></div>
+        <label for="email">Email :</label>
+        <input type="email" name="email" required value="<?= isset($email) ? htmlspecialchars($email) : '' ?>">
+        <div class="error"><?= isset($emailError) ? htmlspecialchars($emailError) : '' ?></div>
 
-    <label for="message">Message :</label>
-    <textarea name="message" required><?= isset($message) ? $message : '' ?></textarea>
-    <div><?= isset($messageError) ? $messageError : '' ?></div>
+        <label for="message">Message :</label>
+        <textarea name="message" required><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
+        <div class="error"><?= isset($messageError) ? htmlspecialchars($messageError) : '' ?></div>
 
-    <button type="submit">Envoyer</button>
+        <button type="submit">Envoyer</button>
+        <div class="success"><?= isset($successMessage) ? htmlspecialchars($successMessage) : '' ?></div>
+    </form>
+    <p><a href="index.php">Retour à l'accueil</a></p>
+</div>
 
-    <div><?= isset($successMessage) ? $successMessage : '' ?></div>
-</form>
+<!-- Importation de jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Importation de votre script menu.js -->
+<script src="../assets/Js/menu.js"></script>
 </body>
 </html>
