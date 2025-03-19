@@ -1,6 +1,6 @@
 <?php
 require_once '../src/gestionAuthentification.php';
-require_once 'header.php';
+include 'header.php';
 
 $pageTitle = "Accueil";
 ?>
@@ -34,7 +34,7 @@ $pageTitle = "Accueil";
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Importation de votre script menu.js -->
-    <script src="../assets/Js/menu.js"></script>
+
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 

@@ -4,6 +4,7 @@
 include 'header.php';
 require_once '../src/gestionAuthentification.php';
 require_once '../src/FormHandler.php';
+ob_start(); // Démarre la temporisation de sortie
 
 $pageTitle = "Contact";
 
@@ -43,14 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <h1>Contact</h1>
         <form method="POST">
-            <label for="text">Pseudo :</label>
-            <input type="text" name="pseudo" required value="<?= isset($pseudo) ? htmlspecialchars($pseudo) : '' ?>">
+            <label for="pseudo">Pseudo :</label>
+            <input type="text" name="pseudo" id="pseudo" required value="<?= isset($pseudo) ? htmlspecialchars($pseudo) : '' ?>">
             <div class="error"><?= isset($pseudoError) ? htmlspecialchars($pseudoError) : '' ?></div>
+
             <label for="email">Email :</label>
-            <input type="email" name="email" required value="<?= isset($email) ? htmlspecialchars($email) : '' ?>">
+            <input type="email" name="email" id="email" required value="<?= isset($email) ? htmlspecialchars($email) : '' ?>">
             <div class="error"><?= isset($emailError) ? htmlspecialchars($emailError) : '' ?></div>
+
             <label for="message">Message :</label>
-            <textarea name="message" required><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
+            <textarea name="message" id="message" required><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
             <div class="error"><?= isset($messageError) ? htmlspecialchars($messageError) : '' ?></div>
 
             <button type="submit">Envoyer</button>
@@ -58,10 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <p><a href="index.php">Retour à l'accueil</a></p>
     </div>
-
+    <?php
+    ob_end_flush(); // Envoie le contenu tamponné au navigateur
+    include 'footer.php';
+    ?>
     </body>
     </html>
 
-<?php
-ob_end_flush(); // Envoie le contenu tamponné au navigateur
-?>
+
+

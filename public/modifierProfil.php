@@ -1,7 +1,8 @@
 <?php
+include 'header.php';
 
 require_once '../src/gestionAuthentification.php';
-
+ob_start(); // Démarre la mise en mémoire tampon de sortie
 if(session_status() === PHP_SESSION_NONE) {
     session_start(); }
 
@@ -97,3 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 </body>
 </html>
+
+<?php
+ob_end_flush(); // Envoie le contenu tamponné au navigateur
+include 'footer.php';
+?>

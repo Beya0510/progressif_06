@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: antiquewhite; /* Couleur de fond */
@@ -19,8 +19,14 @@ body {
     flex: 1; /* Permet à la classe accueil de prendre tout l'espace disponible */
     max-width: 800px; /* Limite la largeur de l'affichage principal */
     margin: 0 auto; /* Centre le contenu */
+    flex-grow: 1; /* Permet à l'élément de grandir pour occuper l'espace disponible */
 }
-
+.container {
+    flex: 1; /* Permet au contenu de prendre toute la place restante */
+}
+.container1 {
+    flex: 1; /* Permet au contenu de prendre toute la place restante */
+}
 /* Styles pour le carrousel */
 .swiper-container {
     max-width: 100%; /* Assure que le carrousel ne dépasse pas la largeur de son conteneur */
@@ -35,52 +41,77 @@ body {
 
 /* Styles pour le menu de navigation */
 nav {
-    background: #333;
-    color: #fff;
+
     padding: 10px 20px;
 }
 
-#hamburger-menu {
+/* Bouton hamburger */
+#hamburger-button {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 5px;
+}
+#hamburger-menu.open {
+    display: block; /* Afficher lorsque "open" est activé */
+}
+.bar {
+    display: block;
     width: 30px;
-    height: 20px;
-    cursor: pointer;
-    margin: 20px;
+    height: 4px;
+    background: black;
+    transition: 0.3s;
 }
 
-#hamburger-menu span {
-    width: 100%;
-    height: 3px;
-    background-color: #4B3D3D; /* Couleur des barres du hamburger */
+/* Animation du bouton hamburger */
+#hamburger-button.active .bar:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+#hamburger-button.active .bar:nth-child(2) {
+    opacity: 0;
+}
+#hamburger-button.active .bar:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
 }
 
-/* Menu principal */
-#main-menu {
-    display: none; /* Masquer le menu par défaut */
-    position: absolute;
-    top: 60px; /* Ajustez selon votre en-tête */
-    left: 0;
-    width: 100%;
-    background-color: #f4f4f4;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Menu */
+#hamburger-menu {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: auto;
+    background: none;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    padding: 50px 20px;
 }
 
-#main-menu ul {
+#hamburger-menu ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
-#main-menu ul li {
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
+#hamburger-menu ul li {
+    margin-bottom: 20px;
 }
 
-#main-menu ul li a {
+#hamburger-menu ul li a {
     text-decoration: none;
-    color: #333;
+    color: black;
+    font-size: 18px;
+}
+
+/* Menu actif */
+#hamburger-menu.open {
+    right: 0;
 }
 
 /* Styles pour les formulaires */
@@ -127,11 +158,14 @@ form button:hover {
 
 /* Styles pour le footer */
 footer {
+
     text-align: center;
     padding: 20px;
     background: #333;
     color: #fff;
-    display: flex; /* Utiliser flex pour le footer */
+    display: flex;
+    flex-direction: column;
+    min-height: auto; /* Hauteur minimale */
     justify-content: center; /* Centrer le contenu */
 }
 
@@ -171,30 +205,31 @@ footer ul li a:hover {
     margin-top: 5px; /* Espacement en haut */
 }
 
-/* Styles pour les écrans plus petits */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        display: none; /* Masquer le menu par défaut */
-    }
+/*!* Styles pour les écrans plus petits *!*/
+/*@media (max-width: 768px) {*/
+/*    nav ul {*/
+/*        flex-direction: column;*/
+/*        display: none; !* Masquer le menu par défaut *!*/
+/*    }*/
 
-    nav ul.active {
-        display: flex; /* Afficher le menu quand il est actif */
-    }
+/*    nav ul.active {*/
+/*        display: flex; !* Afficher le menu quand il est actif *!*/
+/*    }*/
 
-    #hamburger-menu {
-        display: flex; /* Afficher le bouton hamburger */
-    }
+/*    #hamburger-menu {*/
+/*        display: flex; !* Afficher le bouton hamburger *!*/
+/*    }*/
 
-    #main-menu {
-        display: flex; /* Afficher le menu principal */
-    }
+/*    #main-menu {*/
+/*        display: flex; !* Afficher le menu principal *!*/
+/*    }*/
 
-    footer ul {
-        flex-direction: column; /* Afficher les éléments en colonne sur les petits écrans */
-    }
+/*    footer ul {*/
+/*        flex-direction: column; !* Afficher les éléments en colonne sur les petits écrans *!*/
+/*    }*/
 
-    footer ul li {
-        margin: 5px 0; /* Espacement vertical entre les éléments */
-    }
-}
+/*    footer ul li {*/
+/*        margin: 5px 0; !* Espacement vertical entre les éléments *!*/
+/*    }*/
+/*}*/
+
