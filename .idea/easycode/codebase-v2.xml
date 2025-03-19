@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/assets/css/style.css;C:/laragon/www/projets_progressifs/progressif_06/assets/Js/menu.js;C:/laragon/www/projets_progressifs/progressif_06/bdd/init.sql;C:/laragon/www/projets_progressifs/progressif_06/public/connexion.php;C:/laragon/www/projets_progressifs/progressif_06/public/contact.php;C:/laragon/www/projets_progressifs/progressif_06/public/deconnexion.php;C:/laragon/www/projets_progressifs/progressif_06/public/footer.php;C:/laragon/www/projets_progressifs/progressif_06/public/header.php;C:/laragon/www/projets_progressifs/progressif_06/public/index.php;C:/laragon/www/projets_progressifs/progressif_06/public/inscription.php;C:/laragon/www/projets_progressifs/progressif_06/public/profil.php;C:/laragon/www/projets_progressifs/progressif_06/src/FormHandler.php;C:/laragon/www/projets_progressifs/progressif_06/src/gestionAuthentification.php;C:/laragon/www/projets_progressifs/progressif_06/tests/progressif_06/FormHandlerTest.php;C:/laragon/www/projets_progressifs/progressif_06/tests/progressif_06/test_pdo.php;C:/laragon/www/projets_progressifs/progressif_06/composer.json;C:/laragon/www/projets_progressifs/progressif_06/phpinfo.php" />
+  </component>
+</project>

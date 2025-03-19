@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "rellax": "^1.12.1",
+    "swiper": "^11.2.5"
+  }
+}

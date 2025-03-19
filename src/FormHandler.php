@@ -1,5 +1,4 @@
 <?php
-namespace Progressif06;
 class FormHandler {
 
     /**
@@ -10,7 +9,8 @@ class FormHandler {
      * @param int $maxLength Longueur maximale autorisée.
      * @return string|null Message d'erreur ou null si valide.
      */
-    public static function validateLength($value, $minLength, $maxLength) {
+    public static function validateLength($value, $minLength, $maxLength): ?string
+    {
         if (strlen($value) < $minLength || strlen($value) > $maxLength) {
             return "La valeur doit contenir entre $minLength et $maxLength caractères.";
         }
@@ -24,7 +24,8 @@ class FormHandler {
      * @param bool $required Indique si le champ est obligatoire.
      * @return string|null Message d'erreur ou null si valide.
      */
-    public static function validateEmail($email, $required = true) {
+    public static function validateEmail(string $email, bool $required = true): ?string
+    {
         if ($required && empty($email)) {
             return "Ce champ est obligatoire.";
         }
@@ -42,7 +43,8 @@ class FormHandler {
      * @param int $maxLength Longueur maximale du mot de passe.
      * @return string|null Message d'erreur ou null si valide.
      */
-    public static function validatePassword($password, $minLength = 8, $maxLength = 72) {
+    public static function validatePassword(string $password, int $minLength = 8, int $maxLength = 72): ?string
+    {
         if (empty($password)) {
             return "Le mot de passe est obligatoire.";
         }
@@ -74,7 +76,8 @@ class FormHandler {
      * @param string $value2 Seconde valeur.
      * @return string|null Message d'erreur ou null si elles correspondent.
      */
-    public static function validateMatch($value1, $value2) {
+    public static function validateMatch(string $value1, string $value2): ?string
+    {
         if ($value1 !== $value2) {
             return "Les valeurs ne correspondent pas.";
         }
@@ -87,9 +90,9 @@ class FormHandler {
      * @param string $value Valeur à assainir.
      * @return string Valeur assainie.
      */
-    public static function sanitizeInput($value) {
+    public static function sanitizeInput(string $value): string
+    {
         // htmlspecialchars() évite les attaques XSS en échappant les caractères spéciaux
-        return htmlspecialchars(trim($value));
+        return htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8');
     }
 }
-

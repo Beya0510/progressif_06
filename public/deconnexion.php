@@ -1,9 +1,11 @@
 <?php
+session_start(); // Démarre la session si elle n'est pas déjà démarrée
 include 'header.php';
-require_once 'src/gestionAuthentification.php';
+require_once '../src/gestionAuthentification.php';
 
-// Vérifie si l'utilisateur est connecté, si oui, on le déconnecte
+// Vérifie si l'utilisateur est connecté
 if (est_connecte()) {
+    // Déconnexion de l'utilisateur
     deconnecter_utilisateur();
     header('Location: index.php'); // Redirection vers la page d'accueil
     exit;
@@ -13,4 +15,3 @@ if (est_connecte()) {
     exit;
 }
 ?>
-
